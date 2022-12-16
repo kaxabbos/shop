@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop - Склады</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body>
+
+<nav th:insert="blocks/nav :: nav"></nav>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">Склады</h2>
+            </div>
+        </div>
+        <form th:each="warehouse : ${warehouses}" method="post" style="margin-bottom: 10px;">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div><span>Название:&nbsp;</span><span th:text="${warehouse.name}"></span></div>
+                        </div>
+                        <div class="col">
+                            <div><span>Адрес:&nbsp;</span><span th:text="${warehouse.address}"></span></div>
+                        </div>
+                        <div class="col">
+                            <div th:if="${warehouse.description}"><span>Описание:&nbsp;</span><span
+                                    th:text="${warehouse.description}"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-success" role="button" style="margin: 5px;"
+                               th:href="'/warehouse/edit/' + ${warehouse.id}">Редактировать</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-danger" role="button" style="margin: 5px;"
+                               th:href="'/warehouse/delete/' + ${warehouse.id}">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </form>
+    </div>
+</section>
+<footer th:insert="blocks\footer :: footer"></footer>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bold-and-bright.js"></script>
+</body>
+
+</html>

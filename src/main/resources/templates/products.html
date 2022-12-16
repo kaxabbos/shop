@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop - Продукты</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body>
+
+<nav th:insert="blocks/nav :: nav"></nav>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">Продукты</h2>
+            </div>
+        </div>
+        <hr>
+        <form class="text-center" action="/product/search" method="post">
+            <div class="row">
+                <div class="col-2">
+                    <a class="btn btn-info" role="button" style="margin: 5px;" href="/product/all">Все продукты</a>
+                </div>
+                <div class="col">
+                    <input th:value="${input}" class="form-control" type="text" name="search" placeholder="Поиск"
+                           style="margin: 5px;">
+                </div>
+                <div class="col">
+                    <select class="form-select" name="category" required>
+                        <option th:each="category :  ${categories}" th:value="${category}"
+                                th:label="${category.getName()}" th:selected="${category == selectedCategory}"></option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-select" name="desk" required>
+                        <option value="cheap">Сначала дешевые</option>
+                        <option value="expensive">Сначала дорогие</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary" type="submit" style="margin: 5px;">Найти</button>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <form th:each="product : ${products}" th:action="'/cart/add/' + ${product.id}" method="post"
+              style="margin-bottom: 10px;">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col text-center">
+                            <img th:src="'/img/' + ${product.img}" style="width: 200px;border-radius: 25px;"></div>
+                        <div class="col">
+                            <div><span>Название:&nbsp;</span><span th:text="${product.name}"></span></div>
+                            <div><span>Категория:&nbsp;</span><a th:text="${product.category.getName()}"
+                                                                 th:href="'/product/' + ${product.category.name()}"></a>
+                            </div>
+                            <div><span>Цена:&nbsp;</span><span th:text="${product.price}"></span></div>
+                            <div><span>Количество:&nbsp;</span><span th:text="${product.quantity}"></span></div>
+                            <div><span>Продавец:&nbsp;</span><span th:text="${product.warehouse.user.fio}"></span></div>
+                            <div><span>Склад:&nbsp;</span><span th:text="${product.warehouse.name}"></span></div>
+                            <div><span>Вес:&nbsp;</span><span th:text="${product.weight}"></span></div>
+                            <div><span>Сколько дней хранится:&nbsp;</span><span th:text="${product.keep}"></span></div>
+                            <div th:if="${product.description != ''}"><span>Описание:&nbsp;</span><span
+                                    th:text="${product.description}"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${user.role.name() != 'ADMIN'}" class="col-4 text-center">
+                    <div th:if="${user.id != product.warehouse.user.id}" class="row">
+                        <div class="col">
+                            <input class="form-control" type="number" name="quantity" min="1"
+                                   th:max="${product.quantity}"
+                                   placeholder="Количество" style="margin: 5px;" required>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary" type="submit" style="margin: 5px;">Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                    <div th:if="${user.id == product.warehouse.user.id}" class="row">
+                        <div class="col text-center">
+                            <a class="btn btn-success" role="button" style="margin: 5px;"
+                               th:href="'/product/edit/' + ${product.id}">Редактировать</a>
+                        </div>
+                        <div class="col text-center">
+                            <a class="btn btn-danger" role="button" style="margin: 5px;"
+                               th:href="'/product/delete/' + ${product.id}">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </form>
+    </div>
+</section>
+<footer th:insert="blocks\footer :: footer"></footer>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bold-and-bright.js"></script>
+</body>
+
+</html>

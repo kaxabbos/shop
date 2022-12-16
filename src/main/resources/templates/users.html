@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop - Пользователи</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body>
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">Пользователи</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center" style="font-size: 24px;">ФИО</h1>
+            </div>
+            <div class="col">
+                <h1 class="text-center" style="font-size: 24px;">Роль</h1>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-2"></div>
+        </div>
+        <hr>
+        <form th:each="u:${users}" th:action="'/user/edit/' + ${u.id}" method="post" style="margin-bottom: 5px">
+            <div class="row">
+                <div class="col">
+                    <input th:value="${u.fio}" class="form-control" type="text" readonly></div>
+                <div class="col">
+                    <select name="role" class="form-select" required>
+                        <option th:each="role : ${roles}" th:value="${role}" th:label="${role.getName()}"
+                                th:selected="${role == u.role}"></option>
+                    </select>
+                </div>
+                <div class="col-2 text-center">
+                    <button class="btn btn-primary" type="submit">Изменить</button>
+                </div>
+                <div class="col-2 text-center">
+                    <a class="btn btn-danger" role="button" th:href="'/user/delete/' + ${u.id}">
+                    Удалить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer th:insert="blocks\footer :: footer"></footer>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bold-and-bright.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop - Изменить склад</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body>
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">Изменить склад</h2>
+            </div>
+        </div>
+        <form th:action="'/warehouse/edit/' + ${warehouse.id}" method="post" style="margin-bottom: 10px;">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center"><span>Название</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center"><input
+                                class="form-control" type="text" name="name" placeholder="Название" required
+                                style="margin: 5px;" th:value="${warehouse.name}"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center"><span
+                                class="text-center">Адрес</span></div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center"><input
+                                class="form-control" type="text" name="address" placeholder="Адрес"
+                                style="margin: 5px;" required th:value="${warehouse.address}"></div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center"><span>Описание (опционально)</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center"><input
+                                class="form-control" type="text" name="description" placeholder="Описание"
+                                style="margin: 5px;" th:value="${warehouse.description}"></div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" type="submit" style="margin: 5px;">Изменить</button>
+                    <button class="btn btn-dark" type="reset" style="margin: 5px;">Очистить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer th:insert="blocks\footer :: footer"></footer>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bold-and-bright.js"></script>
+
+</body>
+
+</html>

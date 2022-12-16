@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop - Добавить продукт</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body>
+
+<nav th:insert="blocks/nav :: nav"></nav>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">Добавить продукт</h2>
+            </div>
+        </div>
+        <form action="/product/add" method="post" style="margin-bottom: 10px;" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Название</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center"><input
+                                class="form-control" type="text" name="name" placeholder="Название"
+                                style="margin: 5px;" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span class="text-center">Категория</span></div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <select class="form-select" name="category" required>
+                                <option th:each="category : ${categories}" th:value="${category}"
+                                        th:label="${category.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Количество</span></div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <input min="1" class="form-control" type="number" name="quantity" placeholder="Количество"
+                                   required
+                                   style="margin: 5px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span class="text-center">Склад</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <select class="form-select" name="warehouse" required>
+                                <option th:each="warehouse :  ${warehouses}" th:value="${warehouse.id}"
+                                        th:label="${warehouse.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Вес</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <input min="0" class="form-control" type="number" name="weight" placeholder="Вес"
+                                   style="margin: 5px;" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Сколько дней хранится<br></span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <input min="0" class="form-control" type="number" placeholder="Сколько дней хранится"
+                                   name="keep" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Цена<br></span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <input min="1" class="form-control" type="number" placeholder="Цена"
+                                   name="price" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Изображение</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <input class="form-control" type="file" name="img" accept="image/*" required
+                                   style="margin: 5px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 d-md-flex justify-content-md-start align-items-md-center">
+                            <span>Описание (опционально)</span>
+                        </div>
+                        <div class="col d-md-flex justify-content-md-center align-items-md-center">
+                            <input class="form-control" type="text" name="description" placeholder="Описание"
+                                   style="margin: 5px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" type="submit" style="margin: 5px;">Добавить</button>
+                    <button class="btn btn-dark" type="reset" style="margin: 5px;">Очистить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer th:insert="blocks\footer :: footer"></footer>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bold-and-bright.js"></script>
+</body>
+
+</html>

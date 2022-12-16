@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop - Корзина</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body>
+
+<nav th:insert="blocks/nav :: nav"></nav>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div th:if="${message}" class="row mb-4 mb-lg-5">
+            <div class="alert col-md-8 col-xl-6 text-center mx-auto alert-warning" role="alert">
+                <strong th:text="${message}"></strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Корзина</h1>
+            </div>
+        </div>
+        <hr>
+        <div class="row text-center">
+            <div class="col"><span>Продукты</span></div>
+            <div class="col-2"><span>Стоимость единицы</span></div>
+            <div class="col-2"><span>Выбранное количество</span></div>
+            <div class="col-1"><span>Цена</span></div>
+        </div>
+        <hr>
+        <form th:each="cart : ${carts}" th:action="'/cart/edit/' + ${cart.id}" method="post" style="margin-bottom: 10px;">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col text-center">
+                            <img th:src="'/img/' + ${cart.product.img}" style="width: 200px;border-radius: 25px;">
+                        </div>
+                        <div class="col">
+                            <div>
+                                <span>Название:&nbsp;</span>
+                                <span th:text="${cart.product.name}"></span>
+                            </div>
+                            <div>
+                                <span>Имеющееся количество:&nbsp;</span>
+                                <span th:text="${cart.product.quantity}"></span>
+                            </div>
+                            <div>
+                                <span>Категория:&nbsp;</span>
+                                <span th:text="${cart.product.category.getName()}"></span>
+                            </div>
+                            <div>
+                                <span>Сколько дней хранится:&nbsp;</span>
+                                <span th:text="${cart.product.keep}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 text-center"><span th:text="${cart.product.price}"></span></div>
+                <div class="col-2 text-center">
+                    <div class="row">
+                        <div class="col mb-2">
+                            <input class="form-control" type="number" min="1" th:max="${cart.product.quantity}"
+                                   name="quantity" required th:value="${cart.quantity}">
+                        </div>
+                        <div class="row">
+                            <div class="col mb-2">
+                                <button class="btn btn-primary" type="submit">Изменить</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-2">
+                                <a class="btn btn-danger" role="button" th:href="'/cart/delete/' + ${cart.id}">Убрать</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 text-center"><span th:text="${cart.quantity * cart.product.price}"></span></div>
+            </div>
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary" role="button" href="/cart/buy">Купить</a>
+                <a class="btn btn-danger" role="button" href="/cart/delete/all">Убрать все</a>
+            </div>
+            <div class="col-2"><span>Суммарная стоимость:&nbsp;</span><span th:text="${total}"></span></div>
+        </div>
+    </div>
+</section>
+
+<footer th:insert="blocks\footer :: footer"></footer>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bold-and-bright.js"></script>
+
+</body>
+
+</html>
